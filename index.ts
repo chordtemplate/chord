@@ -21,7 +21,7 @@ envVariables.parse(process.env);
 declare global {
 	namespace NodeJS {
 		// rome-ignore lint/suspicious/noEmptyInterface: Infering from zod's types.
-		interface ProcessEnv extends z.infer<typeof envVariables> { }
+		interface ProcessEnv extends z.infer<typeof envVariables> {}
 	}
 }
 
