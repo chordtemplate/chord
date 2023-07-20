@@ -5,8 +5,8 @@ import {
 	Client,
 	Collection,
 	GatewayIntentBits,
-	Routes,
 	REST,
+	Routes,
 	SlashCommandBuilder,
 } from "discord.js";
 import { z } from "zod";
@@ -21,7 +21,7 @@ envVariables.parse(process.env);
 declare global {
 	namespace NodeJS {
 		// rome-ignore lint/suspicious/noEmptyInterface: Infering from zod's types.
-		interface ProcessEnv extends z.infer<typeof envVariables> {}
+		interface ProcessEnv extends z.infer<typeof envVariables> { }
 	}
 }
 
@@ -34,7 +34,6 @@ const TOKEN = process.env.TOKEN;
 const rest = new REST().setToken(TOKEN);
 
 const dir = dirname(fileURLToPath(import.meta.url));
-
 const commands = new Collection<string, [SlashCommandBuilder, ClientEvent]>();
 
 const client = new Client({
@@ -54,7 +53,7 @@ client.on("interactionCreate", async (interaction) => {
 	await command?.[1](interaction);
 });
 
-client.once("ready", async () => {
+client.once("ready", () => {
 	console.log(`ready on ${client.user?.tag}`);
 	console.log(`info: in ${client.guilds.cache.size} servers`);
 });
