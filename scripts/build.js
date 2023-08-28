@@ -1,15 +1,29 @@
 import { build } from "esbuild";
-import { readdir, rm } from "node:fs/promises";
+import { readdirSync, statSync } from "node:fs";
+import { rm } from "node:fs/promises";
 import { join } from "node:path";
 
 await rm(join(process.cwd(), "dist"), { recursive: true, force: true });
 
-const files = await readdir(join(process.cwd(), "./events"));
+const getAllFiles = (dir) => {
+  const files = readdirSync(dir)
+
+  return files.map((file) => {
+    if (file.includes("node_modules") || file.includes(".git")) return;
+
+    if (statSync(dir + "/" + file).isDirectory()) { 
+      return getAllFiles(dir + "/" + file)
+    }
+
+    if (!file.endsWith(".ts")) return;
+
+    return join(dir, file)
+  }).filter((file) => Boolean(file)).flat()
+}
 
 await build({
   entryPoints: [
-    ...files.map((file) => join(process.cwd(), "events/", file)),
-    join(process.cwd(), "index.ts"),
+    ...getAllFiles(process.cwd())
   ],
   logLevel: "warning",
   outdir: "./dist",

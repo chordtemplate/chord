@@ -1,4 +1,4 @@
-import type { ClientEvent, CI } from "../typings";
+import type { CI } from "../typings";
 import { SlashCommandBuilder } from "discord.js";
 
 export const data = new SlashCommandBuilder()
@@ -7,7 +7,7 @@ export const data = new SlashCommandBuilder()
 		"Measures the latency between the moment this command gets executed and when it answers.",
 	);
 
-export const event: ClientEvent = async (interaction: CI) => {
+export const event = async (interaction: CI) => {
 	await interaction.reply(
 		`🏓Latency is ${Date.now() - interaction.createdTimestamp
 		}ms. API Latency is ${Math.round(interaction.client.ws.ping)}ms`,
