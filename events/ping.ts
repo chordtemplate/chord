@@ -8,8 +8,13 @@ export const data = new SlashCommandBuilder()
 	);
 
 export const event = async (interaction: CI) => {
-	await interaction.reply(
-		`🏓Latency is ${Date.now() - interaction.createdTimestamp
-		}ms. API Latency is ${Math.round(interaction.client.ws.ping)}ms`,
+	await interaction.deferReply();
+
+	const reply = await interaction.fetchReply();
+
+	const ping = reply.createdTimestamp - interaction.createdTimestamp;
+
+	await interaction.editReply(
+		`🏓Latency is ${ping}ms. API Latency is ${interaction.client.ws.ping}ms`,
 	);
 };

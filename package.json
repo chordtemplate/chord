@@ -1,13 +1,13 @@
 {
 	"name": "chord-template",
 	"type": "module",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"description": "A simple complete discord.js bot template with commands and events",
 	"main": "dist/index.js",
 	"scripts": {
 		"build": "node scripts/build",
-		"start": "node .",
-		"build:start": "node scripts/build && node ."
+		"start": "node --enable-source-maps .",
+		"build:start": "node scripts/build && node --enable-source-maps ."
 	},
 	"keywords": [],
 	"author": "",
