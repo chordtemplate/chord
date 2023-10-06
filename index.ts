@@ -9,22 +9,37 @@ import {
 	Routes,
 	SlashCommandBuilder,
 } from "discord.js";
-import { z } from "zod";
+import {
+	object,
+	string,
+	enumType,
+	parse,
+	optional,
+	type Output,
+} from "valibot";
 
-const envVariables = z.object({
-	DISCORD_TOKEN: z.string(),
-	NODE_ENV: z.enum(["production", "development"]).optional(),
+const envVariables = object({
+	DISCORD_TOKEN: string(),
+	NODE_ENV: optional(enumType(["production", "development"])),
 });
 
-envVariables.parse(process.env);
+try {
+	parse(envVariables, process.env);
+} catch {
+	console.error(
+		"\x1b[31m \x1b[0m Environment variables aren't set correctly, are you sure you provided the \x1b[1mDISCORD_TOKEN\x1b[0m and that \x1b[1mNODE_ENV\x1b[0m is set to either production or development?",
+	);
+	process.exit(1);
+}
+
 console.log(
-	"\x1b[32m \x1b[0m \x1b[1mDISCORD_TOKEN\x1b[0m environment variable set correctly!",
+	"\x1b[32m \x1b[0m \x1b[1mDISCORD_TOKEN\x1b[0m environment variable is set correctly!",
 );
 
 declare global {
 	namespace NodeJS {
 		// biome-ignore lint/suspicious/noEmptyInterface: Infering from zod's types.
-		interface ProcessEnv extends z.infer<typeof envVariables> {}
+		interface ProcessEnv extends Output<typeof envVariables> {}
 	}
 }
 
@@ -86,7 +101,7 @@ client.once("ready", () => {
 		});
 });
 
-const loadCommands = async () => {
+const loadCommands = async (): Promise<void> => {
 	try {
 		(await readdir(join(dir, "./events")))
 			.filter((file) => file.endsWith(".js"))

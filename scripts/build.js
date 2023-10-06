@@ -41,6 +41,7 @@ await build({
 	sourcemap: !isProduction,
 	target: "node16",
 	platform: "node",
+	format: "esm",
 	minify: true,
 });
 

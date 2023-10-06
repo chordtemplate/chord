@@ -8,9 +8,9 @@ dependencies:
   discord.js:
     specifier: ^14.13.0
     version: 14.13.0
-  zod:
-    specifier: ^3.22.4
-    version: 3.22.4
+  valibot:
+    specifier: ^0.18.0
+    version: 0.18.0
 
 devDependencies:
   '@biomejs/biome':
@@ -493,6 +493,10 @@ packages:
       busboy: 1.6.0
     dev: false
 
+  /valibot@0.18.0:
+    resolution: {integrity: sha512-JpJ1ITTIAA4kuLDX5ygnjuMdeHryNI4cqx3vWQFisytTzH3/RBcTYJO336RSd/gRRRrYhIWf2RuST76p4TbdBw==}
+    dev: false
+
   /ws@8.14.2:
     resolution: {integrity: sha512-wEBG1ftX4jcglPxgFCMJmZ2PLtSbJ2Peg6TmpJFTbe9GZYOQCDPdMYu/Tm0/bGZkw8paZnJY45J4K2PZrLYq8g==}
     engines: {node: '>=10.0.0'}
@@ -504,8 +508,4 @@ packages:
         optional: true
       utf-8-validate:
         optional: true
-    dev: false
-
-  /zod@3.22.4:
-    resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
     dev: false

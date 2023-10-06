@@ -7,6 +7,11 @@
 		"ignore": ["./dist"]
 	},
 	"linter": {
-		"ignore": ["./dist"]
+		"ignore": ["./dist"],
+		"rules": {
+			"correctness": {
+				"noVoidTypeReturn": "error"
+			}
+		}
 	}
 }

@@ -9,7 +9,7 @@
 		"start": "node --enable-source-maps .",
 		"build:start": "node scripts/build && node --enable-source-maps .",
 		"format": "biome format --write .",
-		"lint": "biome check --apply-unsafe ."
+		"lint": "biome lint --apply-unsafe ."
 	},
 	"keywords": [],
 	"author": "angelnext <contact@angelnext.dev>",
@@ -21,6 +21,6 @@
 	},
 	"dependencies": {
 		"discord.js": "^14.13.0",
-		"zod": "^3.22.4"
+		"valibot": "^0.18.0"
 	}
 }
