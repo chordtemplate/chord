@@ -1,9 +1,11 @@
-import { build } from "esbuild";
 import { readdirSync, statSync } from "node:fs";
 import { rm } from "node:fs/promises";
 import { join } from "node:path";
+import { build } from "esbuild";
 
 await rm(join(process.cwd(), "dist"), { recursive: true, force: true });
+
+const isProduction = process.env.NODE_ENV === "production";
 
 const getAllFiles = (dir = process.cwd()) => {
 	const files = readdirSync(dir);
@@ -13,7 +15,7 @@ const getAllFiles = (dir = process.cwd()) => {
 			if (
 				file.includes("node_modules") ||
 				file.includes(".git") ||
-				file.includes("typings") ||
+				file.includes("types.ts") ||
 				file.includes("dist") ||
 				file.includes("scripts")
 			)
@@ -36,10 +38,14 @@ await build({
 	logLevel: "warning",
 	outdir: "./dist",
 	outbase: ".",
-	sourcemap: true,
+	sourcemap: !isProduction,
 	target: "node16",
 	platform: "node",
 	minify: true,
 });
 
-console.log("\x1b[32m  Project compiled successfully\x1b[0m");
+console.log(
+	`\x1b[32m \x1b[0m Project compiled successfully (source map ${
+		isProduction ? "disabled" : "enabled"
+	})`,
+);

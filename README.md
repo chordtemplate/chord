@@ -10,5 +10,5 @@ A simple complete discord.js bot template with commands and events
 
 1. Clone template
 2. Do `npm install` or `pnpm install`
-3. set `TOKEN` environment variable to your bot token
+3. set `DISCORD_TOKEN` environment variable to your bot token
 4. run the bot with `npm run build:start`
