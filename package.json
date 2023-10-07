@@ -6,8 +6,8 @@
 	"main": "dist/index.js",
 	"scripts": {
 		"build": "node scripts/build",
-		"start": "node --enable-source-maps .",
-		"build:start": "node scripts/build && node --enable-source-maps .",
+		"start": "node --env-file .env --enable-source-maps .",
+		"build:start": "pnpm build && pnpm start",
 		"format": "biome format --write .",
 		"lint": "biome lint --apply-unsafe ."
 	},
@@ -17,7 +17,8 @@
 	"devDependencies": {
 		"@biomejs/biome": "^1.2.2",
 		"esbuild": "^0.19.4",
-		"typescript": "^5.2.2"
+		"typescript": "^5.2.2",
+		"fast-glob": "^3.3."
 	},
 	"dependencies": {
 		"discord.js": "^14.13.0",

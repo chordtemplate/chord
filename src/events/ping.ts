@@ -1,5 +1,5 @@
 import { SlashCommandBuilder } from "discord.js";
-import { type CommandAction } from "../types";
+import { type CommandAction } from "../typings";
 
 export const data = new SlashCommandBuilder()
 	.setName("ping")
@@ -15,6 +15,6 @@ export const action: CommandAction = async (interaction) => {
 	const ping = reply.createdTimestamp - interaction.createdTimestamp;
 
 	await interaction.editReply(
-		`🏓Latency is ${ping}ms. API Latency is ${interaction.client.ws.ping}ms`,
+		`🏓 Latency is ${ping}ms. API Latency is ${interaction.client.ws.ping}ms`,
 	);
 };

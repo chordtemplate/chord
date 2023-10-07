@@ -1,6 +1,6 @@
 import { type Message } from "discord.js";
 import { Events } from "discord.js";
-import { type EventAction } from "../types";
+import { type EventAction } from "../typings";
 
 export const data = Events.MessageCreate;
 
