@@ -1,7 +1,11 @@
 import { build } from "esbuild";
 import fg from "fast-glob";
+import { rm } from "node:fs/promises";
+import { join } from "node:path";
 
 const isProduction = process.env.NODE_ENV === "production";
+
+await rm(join(process.cwd(), "dist"), { recursive: true });
 
 await build({
 	entryPoints: await fg(["src/**/*.ts"]),
