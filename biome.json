@@ -11,6 +11,19 @@
 		"rules": {
 			"correctness": {
 				"noVoidTypeReturn": "error"
+			},
+			"complexity": {
+				"noUselessCatch": "error",
+				"useFlatMap": "error",
+				"noUselessEmptyExport": "error",
+				"noUselessRename": "error",
+				"noUselessSwitchCase": "error"
+			},
+			"performance": {
+				"noDelete": "error"
+			},
+			"suspicious": {
+				"noDoubleEquals": "error"
 			}
 		}
 	}

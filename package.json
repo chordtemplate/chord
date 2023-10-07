@@ -17,11 +17,11 @@
 	"devDependencies": {
 		"@biomejs/biome": "^1.2.2",
 		"esbuild": "^0.19.4",
-		"typescript": "^5.2.2",
-		"fast-glob": "^3.3."
+		"typescript": "^5.2.2"
 	},
 	"dependencies": {
 		"discord.js": "^14.13.0",
-		"valibot": "^0.18.0"
+		"valibot": "^0.18.0",
+		"fast-glob": "^3.3.1"
 	}
 }

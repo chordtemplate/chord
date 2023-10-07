@@ -1,22 +1,35 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig.json",
   "compilerOptions": {
+    "baseUrl": "src",
     "rootDir": "./src",
-    "lib": ["esnext"],
-    "module": "esnext",
-    "target": "esnext",
+    "lib": ["ESNext"],
+    "module": "ESNext",
+    "target": "ESNext",
 
-    "moduleResolution": "bundler",
+    "moduleResolution": "Bundler",
     "noEmit": true,
     "allowImportingTsExtensions": true,
     "moduleDetection": "force",
 
     "allowJs": true,
     "esModuleInterop": true,
+    "checkJs": true,
 
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true
   },
   "include": ["src"]
 }

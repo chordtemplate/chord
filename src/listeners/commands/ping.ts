@@ -1,7 +1,7 @@
 import { SlashCommandBuilder } from "discord.js";
-import { type CommandAction } from "../typings";
+import type { CommandAction } from "typings";
 
-export const data = new SlashCommandBuilder()
+export const on = new SlashCommandBuilder()
 	.setName("ping")
 	.setDescription(
 		"Measures the latency between the moment this command gets executed and when it answers.",

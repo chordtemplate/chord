@@ -20,8 +20,9 @@ import {
 	parse,
 	string,
 } from "valibot";
-import { type ClientAction, type ClientEvent } from "./typings";
-import { log } from "./utils/index.js";
+import { log } from "./utils/logger.js";
+import type { ClientAction, ClientEvent } from "typings";
+import fg from "fast-glob";
 
 const envVariables = object({
 	DISCORD_TOKEN: string(),
@@ -107,21 +108,19 @@ client.on(Events.InteractionCreate, (interaction) => {
 	});
 });
 
-readdir(join(dir, "./events"))
+fg([join(dir, "listeners/**/*.js")])
 	.then(async (files) => {
 		for (const file of files) {
-			if (!file.endsWith(".js")) continue;
+			const { on, action }: ClientEvent = await import(file);
 
-			const { data, action }: ClientEvent = await import(
-				join(dir, `./events/${file}`)
-			);
+			log.info(`Loaded ${file}`);
 
-			if (data instanceof SlashCommandBuilder) {
-				commands.set(data.name, [data, action]);
+			if (on instanceof SlashCommandBuilder) {
+				commands.set(on.name, [on, action]);
 				continue;
 			}
 
-			client.on(data, (x) => {
+			client.on(on, (x) => {
 				action(x).catch((err) => {
 					log.error(
 						`Uncaught error at event on file "${file.slice(0, -3)}.ts"`,

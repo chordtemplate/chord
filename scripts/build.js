@@ -4,9 +4,7 @@ import fg from "fast-glob";
 const isProduction = process.env.NODE_ENV === "production";
 
 await build({
-	entryPoints: await fg(["src/**/*.ts"]).then((files) =>
-		files.filter((f) => !f.includes("typings")),
-	),
+	entryPoints: await fg(["src/**/*.ts"]),
 	logLevel: "warning",
 	allowOverwrite: true,
 	outdir: "dist",
