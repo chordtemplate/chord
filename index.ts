@@ -4,7 +4,6 @@ import { fileURLToPath } from "node:url";
 import {
 	Client,
 	Collection,
-	GatewayIntentBits,
 	REST,
 	Routes,
 	SlashCommandBuilder,
@@ -25,16 +24,15 @@ const envVariables = object({
 
 try {
 	parse(envVariables, process.env);
+	console.log(
+		"\x1b[32m \x1b[0m \x1b[1mDISCORD_TOKEN\x1b[0m environment variable is set correctly!",
+	);
 } catch {
 	console.error(
 		"\x1b[31m \x1b[0m Environment variables aren't set correctly, are you sure you provided the \x1b[1mDISCORD_TOKEN\x1b[0m and that \x1b[1mNODE_ENV\x1b[0m is set to either production or development?",
 	);
 	process.exit(1);
 }
-
-console.log(
-	"\x1b[32m \x1b[0m \x1b[1mDISCORD_TOKEN\x1b[0m environment variable is set correctly!",
-);
 
 declare global {
 	namespace NodeJS {
@@ -53,23 +51,12 @@ type ClientEvent = {
 const TOKEN = process.env.DISCORD_TOKEN;
 
 const rest = new REST().setToken(TOKEN);
-
 const dir = dirname(fileURLToPath(import.meta.url));
-
 const commands = new Collection<string, [SlashCommandBuilder, ClientAction]>();
 
-const client = new Client({
-	intents: [
-		GatewayIntentBits.Guilds,
-		GatewayIntentBits.GuildMessages,
-		GatewayIntentBits.GuildMembers,
-		GatewayIntentBits.GuildModeration,
-		GatewayIntentBits.MessageContent,
-		GatewayIntentBits.DirectMessages,
-	],
-});
+const client = new Client({ intents: [] });
 
-client.on("interactionCreate", async (interaction) => {
+client.on("interactionCreate", (interaction) => {
 	if (!interaction.isChatInputCommand()) return;
 	const command = commands.get(interaction.commandName);
 	command?.[1](interaction).catch((err) => {
@@ -101,39 +88,37 @@ client.once("ready", () => {
 		});
 });
 
-const loadCommands = async (): Promise<void> => {
-	try {
-		(await readdir(join(dir, "./events")))
-			.filter((file) => file.endsWith(".js"))
-			.forEach(async (file) => {
-				const { data, action }: ClientEvent = await import(
-					join(dir, `./events/${file}`)
-				);
+readdir(join(dir, "./events"))
+	.then(async (files) => {
+		for (const file of files) {
+			if (!file.endsWith(".js")) continue;
 
-				if (data instanceof SlashCommandBuilder) {
-					commands.set(data.name, [data, action]);
-				} else {
-					client.on(data, async (x) => {
-						try {
-							await action(x);
-						} catch (err) {
-							console.error(
-								`\x1b[31m \x1b[0m Uncaught error at event on file "${file.slice(
-									0,
-									-3,
-								)}.ts"`,
-							);
-							console.error(err);
-						}
-					});
-				}
+			const { data, action }: ClientEvent = await import(
+				join(dir, `./events/${file}`)
+			);
+
+			if (data instanceof SlashCommandBuilder) {
+				commands.set(data.name, [data, action]);
+				continue;
+			}
+
+			client.on(data, (x) => {
+				action(x).catch((err) => {
+					console.error(
+						`\x1b[31m \x1b[0m Uncaught error at event on file "${file.slice(
+							0,
+							-3,
+						)}.ts"`,
+					);
+					console.error(err);
+				});
 			});
-	} catch (err) {
-		console.error("\x1b[31m \x1b[0m Error loading commands");
-		console.error(err);
-	}
-};
-
-loadCommands()
+		}
+	})
 	.then(() => client.login(TOKEN))
-	.catch((e) => console.error(e));
+	.catch((err) => {
+		console.error(
+			"\x1b[31m \x1b[0m Error loading commands and/or starting client",
+		);
+		console.error(err);
+	});
