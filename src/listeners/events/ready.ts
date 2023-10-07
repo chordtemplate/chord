@@ -11,7 +11,7 @@ export const action: EventAction<Client<true>> = async (client) => {
 			body: commands.map(([data]) => data.toJSON()),
 		})
 		.then(() => {
-			log.success(`Logged in as ${log.bold(client.user?.tag)}`);
+			log.success(`Logged in as ${log.bold(client.user.tag)}`);
 		})
 		.catch((err) => {
 			log.error("There was an error uploading commands to Discord API");

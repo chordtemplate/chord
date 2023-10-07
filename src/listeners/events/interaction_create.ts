@@ -6,7 +6,7 @@ import { log } from "../../utils/logger.js";
 export const on = Events.InteractionCreate;
 
 export const action: EventAction<Interaction> = async (interaction) => {
-	if (!interaction.isChatInputCommand()) return;
+	if (!interaction.isCommand()) return;
 
 	const command = commands.get(interaction.commandName);
 	if (!command?.length) {

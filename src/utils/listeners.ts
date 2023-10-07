@@ -1,10 +1,15 @@
-import { type Client, Collection, SlashCommandBuilder } from "discord.js";
+import {
+	type Client,
+	Collection,
+	ContextMenuCommandBuilder,
+	SlashCommandBuilder,
+} from "discord.js";
 import type { ClientAction, ClientEvent } from "typings";
 import { log } from "./logger.js";
 
 export const commands = new Collection<
 	string,
-	[SlashCommandBuilder, ClientAction]
+	[SlashCommandBuilder | ContextMenuCommandBuilder, ClientAction]
 >();
 
 export async function setListeners(files: string[], client: Client) {
@@ -13,7 +18,10 @@ export async function setListeners(files: string[], client: Client) {
 
 		log.info(`Loaded ${file}`);
 
-		if (on instanceof SlashCommandBuilder) {
+		if (
+			on instanceof SlashCommandBuilder ||
+			on instanceof ContextMenuCommandBuilder
+		) {
 			commands.set(on.name, [on, action]);
 			continue;
 		}
