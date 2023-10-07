@@ -1,4 +1,4 @@
-import type { Message } from "discord.js";
+import { type Message } from "discord.js";
 import { Events } from "discord.js";
 import { type EventAction } from "../types";
 

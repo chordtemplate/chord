@@ -36,7 +36,7 @@ try {
 
 declare global {
 	namespace NodeJS {
-		// biome-ignore lint/suspicious/noEmptyInterface: Infering from zod's types.
+		// biome-ignore lint/suspicious/noEmptyInterface: Infering from valibot's types.
 		interface ProcessEnv extends Output<typeof envVariables> {}
 	}
 }
