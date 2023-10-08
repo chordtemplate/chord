@@ -1,27 +1,25 @@
 {
 	"name": "chord-template",
-	"type": "module",
 	"version": "0.1.0",
+	"type": "module",
 	"description": "A simple complete discord.js bot template with commands and events",
-	"main": "dist/index.js",
+	"main": "src/index.ts",
 	"scripts": {
-		"build": "node scripts/build",
-		"start": "node --env-file .env --enable-source-maps .",
-		"build:start": "pnpm build && pnpm start",
+		"start": "tsx --env-file=.env .",
 		"format": "biome format --write .",
-		"lint": "biome lint --apply-unsafe ."
+		"lint": "tsc && biome lint --apply-unsafe ."
 	},
-	"keywords": [],
+	"keywords": ["discord-bot", "bot"],
 	"author": "angelnext <contact@angelnext.dev>",
 	"license": "MIT",
 	"devDependencies": {
 		"@biomejs/biome": "^1.2.2",
-		"esbuild": "^0.19.4",
+		"tsx": "^3.13.0",
 		"typescript": "^5.2.2"
 	},
 	"dependencies": {
 		"discord.js": "^14.13.0",
-		"valibot": "^0.18.0",
-		"fast-glob": "^3.3.1"
+		"fast-glob": "^3.3.1",
+		"zod": "^3.22.4"
 	}
 }

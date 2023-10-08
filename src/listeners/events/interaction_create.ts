@@ -1,11 +1,10 @@
 import { Colors, EmbedBuilder, Events, type Interaction } from "discord.js";
-import type { EventAction } from "typings";
-import { commands } from "../../utils/listeners.js";
-import { log } from "../../utils/logger.js";
+import { commands } from "utils/listeners";
+import { log } from "utils/logger";
 
 export const on = Events.InteractionCreate;
 
-export const action: EventAction<Interaction> = async (interaction) => {
+export const action: Action<Interaction> = async (interaction) => {
 	if (!interaction.isCommand()) return;
 
 	const command = commands.get(interaction.commandName);
@@ -16,19 +15,24 @@ export const action: EventAction<Interaction> = async (interaction) => {
 
 	const [data, action] = command;
 
-	action(interaction).catch((err) => {
+	await action(interaction).catch((err) => {
 		log.error(`Uncaught error at command "${data.name}"`);
 		console.error(err);
-		interaction.editReply({
-			embeds: [
-				new EmbedBuilder()
-					.setTitle("There was an error with this command")
-					.setDescription(
-						`The command ${data.name} failed by unknown reasons, try again later, or report this bug.`,
-					)
-					.setColor(Colors.Red)
-					.setTimestamp(new Date()),
-			],
-		});
+
+		const embed = new EmbedBuilder()
+			.setTitle("There was an error with this command")
+			.setDescription(
+				`The command ${data.name} failed by unknown reasons, try again later, or report this bug.`,
+			)
+			.setColor(Colors.Red)
+			.setTimestamp(new Date());
+
+		interaction
+			.reply({
+				embeds: [embed],
+			})
+			.catch(() => {
+				interaction.editReply({ embeds: [embed] }).catch(() => {});
+			});
 	});
 };

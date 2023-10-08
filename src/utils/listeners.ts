@@ -1,18 +1,21 @@
+import { join } from "node:path";
 import {
 	type Client,
 	Collection,
 	ContextMenuCommandBuilder,
 	SlashCommandBuilder,
 } from "discord.js";
-import type { ClientAction, ClientEvent } from "typings";
-import { log } from "./logger.js";
+import fg from "fast-glob";
+import { log } from "./logger";
 
 export const commands = new Collection<
 	string,
 	[SlashCommandBuilder | ContextMenuCommandBuilder, ClientAction]
 >();
 
-export async function setListeners(files: string[], client: Client) {
+export async function setListeners(client: Client) {
+	const files = await fg([join(process.cwd(), "src/listeners/**/*.ts")]);
+
 	for (const file of files) {
 		const { on, action }: ClientEvent = await import(file);
 
