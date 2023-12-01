@@ -13,7 +13,7 @@
 	"author": "angelnext <contact@angelnext.dev>",
 	"license": "MIT",
 	"devDependencies": {
-		"@biomejs/biome": "^1.2.2",
+		"@biomejs/biome": "^1.4.1",
 		"tsx": "^3.13.0",
 		"typescript": "^5.2.2"
 	},
