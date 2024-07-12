@@ -1,34 +1,28 @@
 import type {
-	ChatInputCommandInteraction,
-	ContextMenuCommandBuilder,
-	MessageContextMenuCommandInteraction,
-	SlashCommandBuilder,
-	UserContextMenuCommandInteraction,
+  ChatInputCommandInteraction,
+  ContextMenuCommandBuilder,
+  InteractionResponse,
+  Message,
+  MessageContextMenuCommandInteraction,
+  SlashCommandBuilder,
+  UserContextMenuCommandInteraction,
 } from "discord.js";
 import { envVariables } from "utils/env";
-import { type Output } from "valibot";
 import { z } from "zod";
 
 declare global {
-	namespace NodeJS {
-		// biome-ignore lint/suspicious/noEmptyInterface: Infering from zod's types.
-		interface ProcessEnv extends z.infer<typeof envVariables> {}
-	}
+  namespace NodeJS {
+    interface ProcessEnv extends z.infer<typeof envVariables> { }
+  }
 
-	interface Response {
-		json<T>(): Promise<T>;
-	}
+  interface ClientEvent {
+    data: SlashCommandBuilder | ContextMenuCommandBuilder | string;
+    action: Action<unknown>;
+  }
 
-	type ClientAction = (x: unknown) => Promise<void>;
+  type Action<T> = (x: T) => Promise<boolean | undefined>;
 
-	interface ClientEvent {
-		on: SlashCommandBuilder | ContextMenuCommandBuilder | string;
-		action: ClientAction;
-	}
-
-	type Action<T> = (x: T) => Promise<void>;
-
-	type SlashCommand = ChatInputCommandInteraction;
-	type UserCommand = UserContextMenuCommandInteraction;
-	type MessageCommand = MessageContextMenuCommandInteraction;
+  type SlashCommand = ChatInputCommandInteraction;
+  type UserCommand = UserContextMenuCommandInteraction;
+  type MessageCommand = MessageContextMenuCommandInteraction;
 }

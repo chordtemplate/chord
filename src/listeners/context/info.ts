@@ -3,13 +3,15 @@ import {
 	ApplicationCommandType,
 	ButtonBuilder,
 	ButtonStyle,
+	Collection,
 	ContextMenuCommandBuilder,
 	EmbedBuilder,
-	GuildMember,
+	type GuildMember,
 	PermissionFlagsBits,
+	type Role,
 } from "discord.js";
 
-export const on = new ContextMenuCommandBuilder()
+export const data = new ContextMenuCommandBuilder()
 	.setName("User Info")
 	.setType(ApplicationCommandType.User);
 
@@ -22,8 +24,12 @@ export const action: Action<UserCommand> = async (interaction) => {
 		.setThumbnail(user.displayAvatarURL())
 		.setFields(
 			{
-				name: "__Name__",
+				name: "__ID__",
 				value: `[**\`${user.id}\`**]`,
+			},
+			{
+				name: "__Name__",
+				value: `${user.displayName}`,
 			},
 			{
 				name: "__Account Creation__",
@@ -54,7 +60,13 @@ export const action: Action<UserCommand> = async (interaction) => {
 			},
 			{
 				name: "__Roles__",
-				value: `${[...(member?.roles.cache || [])].join(", ") || "(No Roles)"}`,
+				value: `${
+					[
+						...(member?.roles.cache || new Collection<string, Role>()).map(
+							(r) => r.toString(),
+						),
+					].join(", ") || "(No Roles)"
+				}`,
 			},
 		)
 		.setFooter({
@@ -75,4 +87,6 @@ export const action: Action<UserCommand> = async (interaction) => {
 			),
 		],
 	});
+
+	return true;
 };

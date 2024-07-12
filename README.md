@@ -1,6 +1,6 @@
 <kbd><img width="512" alt="chord" src="https://i.imgur.com/dFE4k5E.png" /></kbd>
 
-A simple complete discord.js bot template with commands and events.
+A simple complete discord.js bot template with commands and events. It also comes with an expensive error system to avoid your bot to crash.
 
 ---
 

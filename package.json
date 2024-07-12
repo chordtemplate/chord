@@ -1,25 +1,31 @@
 {
-	"name": "chord-template",
-	"version": "0.1.0",
-	"type": "module",
-	"description": "A simple complete discord.js bot template with commands and events",
-	"main": "src/index.ts",
-	"scripts": {
-		"start": "tsx --env-file=.env .",
-		"format": "biome format --write .",
-		"lint": "tsc && biome lint --apply-unsafe ."
-	},
-	"keywords": ["discord-bot", "bot"],
-	"author": "angelnext <contact@angelnext.dev>",
-	"license": "MIT",
-	"devDependencies": {
-		"@biomejs/biome": "^1.2.2",
-		"tsx": "^3.13.0",
-		"typescript": "^5.2.2"
-	},
-	"dependencies": {
-		"discord.js": "^14.13.0",
-		"fast-glob": "^3.3.1",
-		"zod": "^3.22.4"
-	}
+  "name": "chord-template",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "A simple complete discord.js bot template with commands and events",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "bun run .",
+    "format": "biome format --write .",
+    "lint": "tsc && biome lint --apply-unsafe ."
+  },
+  "keywords": [
+    "discord-bot",
+    "bot"
+  ],
+  "author": "angelnext <contact@angelnext.dev>",
+  "license": "MIT",
+  "devDependencies": {
+    "@biomejs/biome": "^1.8.3",
+    "@types/bun": "^1.1.6",
+    "@types/node": "^20.14.10",
+    "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "@rubiks/rubiks": "npm:@jsr/rubiks__rubiks",
+    "discord.js": "^14.15.3",
+    "fast-glob": "^3.3.2",
+    "zod": "^3.23.8"
+  },
+  "packageManager": "pnpm@8.15.4"
 }

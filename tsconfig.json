@@ -3,26 +3,23 @@
   "compilerOptions": {
     "baseUrl": "src",
     "rootDir": "./src",
-    "lib": ["ESNext"],
+    "lib": [
+      "ESNext"
+    ],
     "module": "ESNext",
     "target": "ESNext",
-
     "moduleResolution": "Bundler",
     "noEmit": true,
     "allowImportingTsExtensions": true,
     "moduleDetection": "force",
-
     "allowJs": true,
     "esModuleInterop": true,
     "checkJs": true,
-
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
-
     "allowUnusedLabels": false,
     "allowUnreachableCode": false,
     "noUncheckedIndexedAccess": true,
@@ -33,5 +30,7 @@
     "noImplicitAny": true,
     "useUnknownInCatchVariables": true
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }
